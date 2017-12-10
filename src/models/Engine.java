@@ -5,7 +5,7 @@ import interfaces.Engineable;
 /**
  * Created by sasaas on 2.12.2017 г..
  */
-public class Engine extends VehiclePart implements Engineable {
+public class Engine implements Engineable {
 
     public Engine(float airFuelMixture, float cylBore, float cylStroke, int cylCount, double displacement){
         this.setAirFuelMixture(airFuelMixture);
@@ -16,7 +16,6 @@ public class Engine extends VehiclePart implements Engineable {
     }
 
     public Engine(){
-
     }
 
     private float airFuelMixture; //unused
