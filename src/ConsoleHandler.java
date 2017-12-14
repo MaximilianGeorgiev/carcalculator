@@ -11,19 +11,14 @@ import java.util.List;
  * Created by sasaas on 2.12.2017 г..
  */
 public class ConsoleHandler {
-    private List<String> parsedInfo;
-
-
-    BufferedReader scanner = new BufferedReader(new InputStreamReader(System.in));
 
     public static Engine compileVehiclePart(String... args) throws IOException {
         float airFuelMixture = 14.7f;  // AFR is hardcoded
         float cylBore = Float.parseFloat(args[0]);
         float cylStroke = Float.parseFloat(args[1]);
         int cylCount = Integer.parseInt(args[2]);
-        double displacement = Double.parseDouble(args[3]);
 
-        return new Engine(airFuelMixture, cylBore, cylStroke, cylCount, displacement);
+        return new Engine(airFuelMixture, cylBore, cylStroke, cylCount);
     }
 
     public static float[] compileNewBoreAndStroke(String... args) {
@@ -35,4 +30,12 @@ public class ConsoleHandler {
         return new float[]{newBore, newStroke};
     }
 
+    public static boolean isInputValid(String... args){
+        for (String arg : args) {
+            if (arg.equals("") || arg.equals(null)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

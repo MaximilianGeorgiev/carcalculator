@@ -7,4 +7,5 @@ import models.Engine;
  */
 public interface Engineable {
     double calculateNewDisplacement(float newBore, float newStroke);
+    double calculateInitialDisplacement(float bore, float stroke);
 }

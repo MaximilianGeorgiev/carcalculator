@@ -7,15 +7,20 @@ import interfaces.Engineable;
  */
 public class Engine implements Engineable {
 
-    public Engine(float airFuelMixture, float cylBore, float cylStroke, int cylCount, double displacement){
+//    public Engine(float airFuelMixture, float cylBore, float cylStroke, int cylCount, double displacement){
+//        this.setAirFuelMixture(airFuelMixture);
+//        this.setCylBore(cylBore);
+//        this.setCylStroke(cylStroke);
+//        this.setCylCount(cylCount);
+//        this.setDisplacement(displacement);
+//    }
+
+    public Engine(float airFuelMixture, float cylBore, float cylStroke, int cylCount){
         this.setAirFuelMixture(airFuelMixture);
         this.setCylBore(cylBore);
         this.setCylStroke(cylStroke);
         this.setCylCount(cylCount);
-        this.setDisplacement(displacement);
-    }
-
-    public Engine(){
+        this.setDisplacement(this.calculateInitialDisplacement(cylBore,cylStroke));
     }
 
     private float airFuelMixture; //unused
@@ -71,5 +76,12 @@ public class Engine implements Engineable {
         double newDisplacement = (Math.PI / 4) * (Math.pow(newBore,2)) * newStroke * this.getCylCount();
 
         return newDisplacement;
+    }
+
+    @Override
+    public double calculateInitialDisplacement(float bore, float stroke) {
+        double Displacement = (Math.PI / 4) * (Math.pow(bore,2)) * stroke * this.getCylCount();
+
+        return Displacement;
     }
 }
