@@ -7,37 +7,23 @@ import interfaces.Engineable;
  */
 public class Engine implements Engineable {
 
-//    public Engine(float airFuelMixture, float cylBore, float cylStroke, int cylCount, double displacement){
-//        this.setAirFuelMixture(airFuelMixture);
-//        this.setCylBore(cylBore);
-//        this.setCylStroke(cylStroke);
-//        this.setCylCount(cylCount);
-//        this.setDisplacement(displacement);
-//    }
-
-    public Engine(float airFuelMixture, float cylBore, float cylStroke, int cylCount){
-        this.setAirFuelMixture(airFuelMixture);
-        this.setCylBore(cylBore);
-        this.setCylStroke(cylStroke);
-        this.setCylCount(cylCount);
-        this.setDisplacement(this.calculateInitialDisplacement(cylBore,cylStroke));
-    }
-
     private float airFuelMixture; //unused
+
     private float cylBore;
     private float cylStroke;
-
     private int cylCount;
+
     private double displacement;
 
     public double getDisplacement() {
-        return this.displacement;
+        String displacement = String.valueOf(this.displacement).substring(0,4);
+        return Double.parseDouble(displacement);
     }
-
 
     public float getAirFuelMixture() {
         return this.airFuelMixture;
     }
+
 
     public float getCylBore() {
         return this.cylBore;
@@ -54,10 +40,10 @@ public class Engine implements Engineable {
     private void setDisplacement(double displacement) {
         this.displacement = displacement;
     }
+
     private void setAirFuelMixture(float airFuelMixture) {
         this.airFuelMixture = airFuelMixture;
     }
-
     private void setCylBore(float cylBore) {
         this.cylBore = cylBore;
     }
@@ -70,18 +56,29 @@ public class Engine implements Engineable {
         this.cylCount = cylCount;
     }
 
+    public Engine(float cylBore, float cylStroke, int cylCount){
+        this.setCylBore(cylBore);
+        this.setCylStroke(cylStroke);
+        this.setCylCount(cylCount);
+        this.setDisplacement(this.calculateNewDisplacement(cylBore,cylStroke));
+    }
+
+    public Engine(float airFuelMixture, float cylBore, float cylStroke, int cylCount){
+        this.setAirFuelMixture(airFuelMixture);
+        this.setCylBore(cylBore);
+        this.setCylStroke(cylStroke);
+        this.setCylCount(cylCount);
+        this.setDisplacement(this.calculateNewDisplacement(cylBore,cylStroke));
+    }
+
 
     @Override
     public double calculateNewDisplacement(float newBore, float newStroke) {
-        double newDisplacement = (Math.PI / 4) * (Math.pow(newBore,2)) * newStroke * this.getCylCount();
+        double value = (Math.PI / 4) * (Math.pow(newBore,2)) * newStroke * this.getCylCount();
 
-        return newDisplacement;
+        String newDisplacement = String.valueOf(value).substring(0,4);
+
+        return Double.parseDouble(newDisplacement);
     }
 
-    @Override
-    public double calculateInitialDisplacement(float bore, float stroke) {
-        double Displacement = (Math.PI / 4) * (Math.pow(bore,2)) * stroke * this.getCylCount();
-
-        return Displacement;
-    }
 }

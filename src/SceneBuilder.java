@@ -1,19 +1,12 @@
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.Engine;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
-import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by sasaas on 10.12.2017 г..
@@ -21,6 +14,8 @@ import java.util.ArrayList;
 public final class SceneBuilder {
     private static Stage stage;
 
+
+    // keep track of initial stage (main menu)
     public static void copyStage(Stage stage1) {
         stage = stage1;
     }
@@ -46,6 +41,7 @@ public final class SceneBuilder {
     }
 
     public static Scene createDisplacementDiffCalculator() {
+
         Pane displacementCalcPane = new Pane();
 
         Label bore = new Label("Bore:");
@@ -68,32 +64,52 @@ public final class SceneBuilder {
 
         //needs refactoring
         calculateButton.setOnAction(b -> {
-
                     String[] inputArgs = new String[]{boreInput.getText(), strokeInput.getText(),
                             cylinderCountInput.getText()};
 
                     String[] newInputArgs = new String[]{newBoreInput.getText(), newStrokeInput.getText()};
 
-
                     StringBuilder output = new StringBuilder();
 
-
+                    // check if required info to create an engine is present
                     if (ConsoleHandler.isInputValid(inputArgs)) {
-                        Engine engine =
-                                null;
-                        try {
-                            engine = ConsoleHandler.compileVehiclePart(inputArgs);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        Engine engine = ConsoleHandler.compileVehiclePart(inputArgs);
 
+                        // only if the request is to calculate DIFFERENCE then check the other params (newbore, newstroke)
                         if (isDifference.isSelected()) {
                             if (ConsoleHandler.isInputValid(newInputArgs)) {
                                 float[] params = ConsoleHandler.compileNewBoreAndStroke(newBoreInput.getText(), newStrokeInput.getText());
 
+
                                 output.append("New displacement is: ");
-                                output.append(Math.round(engine.calculateNewDisplacement(params[0], params[1])));
-                                output.append(" cc");
+                                output.append(engine.calculateNewDisplacement(params[0], params[1]));
+                                output.append(" cc\n");
+                                output.append("Which is ");
+
+                                double difference = 0;
+                                double percentDifference = 0;
+
+                                double newDisp = engine.calculateNewDisplacement(params[0], params[1]);
+                                double oldDisp = engine.getDisplacement();
+
+                                // EXTRACT COMMAND
+                                if (newDisp > oldDisp) {
+                                    difference = newDisp - oldDisp;
+                                    output.append(difference);
+                                    output.append(" cc and ");
+
+                                    output.append(ConsoleHandler.createOutputDifference(oldDisp, newDisp, difference));
+                                    output.append(" % bigger.");
+                                } else if (newDisp < oldDisp) {
+                                    difference = oldDisp - newDisp;
+                                    output.append(difference);
+                                    output.append(" cc and ");
+
+                                    output.append(ConsoleHandler.createOutputDifference(oldDisp, newDisp, difference));
+                                    output.append(" % smaller.");
+                                } else {
+                                    output.append("same as initial.");
+                                }
                             } else {
                                 output.append("Invalid input!");
                             }
@@ -106,10 +122,10 @@ public final class SceneBuilder {
                         output.append("Invalid input!");
                     }
 
-
                     Label text = new Label(String.valueOf(output));
                     text.setLayoutX(15);
                     text.setLayoutY(310);
+
                     displacementCalcPane.getChildren().add(text);
                 }
         );
