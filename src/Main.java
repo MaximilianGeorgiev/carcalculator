@@ -18,7 +18,7 @@ public class Main extends Application{
 
         SceneBuilder.copyStage(stage);
 
-        displacementOptionsScene = SceneBuilder.createDisplacementOptions();
+        displacementOptionsScene = SceneBuilder.createOptions();
 
         primaryStage.setScene(displacementOptionsScene);
         primaryStage.show();

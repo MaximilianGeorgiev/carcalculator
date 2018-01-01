@@ -20,13 +20,14 @@ public final class SceneBuilder {
         stage = stage1;
     }
 
-    public static Scene createDisplacementOptions() {
-        Button calculateDisplacement = new Button("UNUSED");
+    public static Scene createOptions() {
+        Button calculateMileage = new Button("Calculate mileage");
         Button calculateDisplacementDiff = new Button("Calculate disp. difference");
 
-        calculateDisplacement.setMinWidth(150);
-        calculateDisplacement.setLayoutX(44);
-        calculateDisplacement.setLayoutY(44);
+        calculateMileage.setMinWidth(150);
+        calculateMileage.setLayoutX(44);
+        calculateMileage.setLayoutY(44);
+        calculateMileage.setOnAction(e -> stage.setScene(SceneBuilder.createMileageCalculator()));
 
         calculateDisplacementDiff.setMaxWidth(150);
         calculateDisplacementDiff.setLayoutX(44);
@@ -34,21 +35,99 @@ public final class SceneBuilder {
         calculateDisplacementDiff.setOnAction(e -> stage.setScene(SceneBuilder.createDisplacementDiffCalculator()));
 
         Pane layout = new Pane();
-        layout.getChildren().add(calculateDisplacement);
+        layout.getChildren().add(calculateMileage);
         layout.getChildren().add(calculateDisplacementDiff);
 
         return new Scene(layout, 233, 200);
+    }
+
+    public static Scene createMileageCalculator() {
+        Pane mileageCalcPane = new Pane();
+
+        Label distanceLabel = new Label("Distance:");
+        Label gasUsedLabel = new Label("Gas used:");
+
+        TextField distanceInput = new TextField();
+        TextField gasInput = new TextField();
+
+        CheckBox isImperial = new CheckBox();
+
+        Button backButton = new Button();
+        Button calculateButton = new Button();
+
+        distanceLabel.setLayoutY(25);
+        distanceInput.setLayoutX(80);
+        distanceInput.setLayoutY(25);
+
+        gasUsedLabel.setLayoutY(65);
+        gasInput.setLayoutX(80);
+        gasInput.setLayoutY(65);
+
+        isImperial.setLayoutX(55);
+        isImperial.setLayoutY(105);
+        isImperial.setText("Use imperial system");
+
+        StringBuilder output = new StringBuilder();
+
+        calculateButton.setText("Calculate");
+        calculateButton.setLayoutX(154);
+        calculateButton.setLayoutY(150);
+        calculateButton.setOnAction(b -> {
+            String[] input = new String[]{distanceInput.getText(), gasInput.getText()};
+
+            if (ConsoleHandler.isInputValid(input)) {
+                double distance = Double.parseDouble(distanceInput.getText());
+                double gasUsed = Double.parseDouble(gasInput.getText());
+
+                Engine engine = new Engine(distance, gasUsed);
+
+                output.append("Gas mileage is: ");
+                output.append(engine.getGasMileage());
+
+                if (isImperial.isSelected()) {
+                    output.append(" MPG");
+                } else {
+                    output.append(" L/100 km");
+                }
+            } else {
+                output.append("Invalid input!");
+            }
+
+            Label text = new Label(String.valueOf(output));
+            text.setLayoutX(15);
+            text.setLayoutY(200);
+            mileageCalcPane.getChildren().add(text);
+
+        });
+
+
+        // dublicate
+        backButton.setText("Back");
+        backButton.setLayoutX(22);
+        backButton.setLayoutY(150);
+        backButton.setOnAction(b -> stage.setScene(SceneBuilder.createOptions()));
+
+        mileageCalcPane.getChildren().add(distanceLabel);
+        mileageCalcPane.getChildren().add(gasUsedLabel);
+        mileageCalcPane.getChildren().add(distanceInput);
+        mileageCalcPane.getChildren().add(gasInput);
+        mileageCalcPane.getChildren().add(isImperial);
+        mileageCalcPane.getChildren().add(backButton);
+        mileageCalcPane.getChildren().add(calculateButton);
+
+
+        return new Scene(mileageCalcPane, 233, 255);
     }
 
     public static Scene createDisplacementDiffCalculator() {
 
         Pane displacementCalcPane = new Pane();
 
-        Label bore = new Label("Bore:");
-        Label stroke = new Label("Stroke:");
-        Label cylinderCount = new Label("Cylinder count:");
-        Label newBore = new Label("New bore:");
-        Label newStroke = new Label("New stroke:");
+        Label boreLabel = new Label("Bore:");
+        Label strokeLabel = new Label("Stroke:");
+        Label cylinderCountLabel = new Label("Cylinder count:");
+        Label newBoreLabel = new Label("New bore:");
+        Label newStrokeLabel = new Label("New stroke:");
 
         TextField boreInput = new TextField();
         TextField strokeInput = new TextField();
@@ -137,40 +216,40 @@ public final class SceneBuilder {
         backButton.setText("Back");
         backButton.setLayoutX(22);
         backButton.setLayoutY(257);
-        backButton.setOnAction(b -> stage.setScene(SceneBuilder.createDisplacementOptions()));
+        backButton.setOnAction(b -> stage.setScene(SceneBuilder.createOptions()));
 
         isDifference.setText("Calculate displacement difference");
         isDifference.setLayoutX(16);
         isDifference.setLayoutY(222);
 
 
-        bore.setLayoutY(25);
+        boreLabel.setLayoutY(25);
         boreInput.setLayoutY(20);
         boreInput.setLayoutX(91);
 
-        stroke.setLayoutY(65);
+        strokeLabel.setLayoutY(65);
         strokeInput.setLayoutY(60);
         strokeInput.setLayoutX(91);
 
-        cylinderCount.setLayoutY(105);
+        cylinderCountLabel.setLayoutY(105);
         cylinderCountInput.setLayoutY(100);
         cylinderCountInput.setLayoutX(91);
 
 
-        newBore.setLayoutY(145);
+        newBoreLabel.setLayoutY(145);
         newBoreInput.setLayoutY(140);
         newBoreInput.setLayoutX(91);
 
-        newStroke.setLayoutY(185);
+        newStrokeLabel.setLayoutY(185);
         newStrokeInput.setLayoutY(180);
         newStrokeInput.setLayoutX(91);
 
 
-        displacementCalcPane.getChildren().add(bore);
-        displacementCalcPane.getChildren().add(stroke);
-        displacementCalcPane.getChildren().add(cylinderCount);
-        displacementCalcPane.getChildren().add(newBore);
-        displacementCalcPane.getChildren().add(newStroke);
+        displacementCalcPane.getChildren().add(boreLabel);
+        displacementCalcPane.getChildren().add(strokeLabel);
+        displacementCalcPane.getChildren().add(cylinderCountLabel);
+        displacementCalcPane.getChildren().add(newBoreLabel);
+        displacementCalcPane.getChildren().add(newStrokeLabel);
 
         displacementCalcPane.getChildren().add(boreInput);
         displacementCalcPane.getChildren().add(strokeInput);
