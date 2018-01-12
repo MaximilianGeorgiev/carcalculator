@@ -1,3 +1,4 @@
+import enums.Coordinates;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -24,14 +25,14 @@ public final class SceneBuilder {
         Button calculateMileage = new Button("Calculate mileage");
         Button calculateDisplacementDiff = new Button("Calculate disp. difference");
 
-        calculateMileage.setMinWidth(150);
-        calculateMileage.setLayoutX(44);
-        calculateMileage.setLayoutY(44);
+        calculateMileage.setMinWidth(Coordinates.MILEAGEBUTTON.boundaryWidth); // why is it even used
+        calculateMileage.setLayoutX(Coordinates.MILEAGEBUTTON.WIDTH);
+        calculateMileage.setLayoutY(Coordinates.MILEAGEBUTTON.HEIGHT);
         calculateMileage.setOnAction(e -> stage.setScene(SceneBuilder.createMileageCalculator()));
 
-        calculateDisplacementDiff.setMaxWidth(150);
-        calculateDisplacementDiff.setLayoutX(44);
-        calculateDisplacementDiff.setLayoutY(114);
+        calculateDisplacementDiff.setMaxWidth(Coordinates.DISPBUTTON.boundaryWidth); //why is it even used
+        calculateDisplacementDiff.setLayoutX(Coordinates.DISPBUTTON.WIDTH);
+        calculateDisplacementDiff.setLayoutY(Coordinates.DISPBUTTON.HEIGHT);
         calculateDisplacementDiff.setOnAction(e -> stage.setScene(SceneBuilder.createDisplacementDiffCalculator()));
 
         Pane layout = new Pane();
@@ -40,6 +41,7 @@ public final class SceneBuilder {
 
         return new Scene(layout, 233, 200);
     }
+
 
     public static Scene createMileageCalculator() {
         Pane mileageCalcPane = new Pane();
@@ -55,23 +57,23 @@ public final class SceneBuilder {
         Button backButton = new Button();
         Button calculateButton = new Button();
 
-        distanceLabel.setLayoutY(25);
-        distanceInput.setLayoutX(80);
-        distanceInput.setLayoutY(25);
+        distanceLabel.setLayoutY(Coordinates.DISTANCE.HEIGHT);
+        distanceInput.setLayoutX(Coordinates.DISTANCE.WIDTH);
+        distanceInput.setLayoutY(Coordinates.DISTANCE.HEIGHT);
 
-        gasUsedLabel.setLayoutY(65);
-        gasInput.setLayoutX(80);
-        gasInput.setLayoutY(65);
+        gasUsedLabel.setLayoutY(Coordinates.GASUSED.HEIGHT);
+        gasInput.setLayoutX(Coordinates.GASUSED.WIDTH);
+        gasInput.setLayoutY(Coordinates.GASUSED.HEIGHT);
 
-        isImperial.setLayoutX(55);
-        isImperial.setLayoutY(105);
+        isImperial.setLayoutX(Coordinates.ISIMPERIAL.WIDTH);
+        isImperial.setLayoutY(Coordinates.ISIMPERIAL.HEIGHT);
         isImperial.setText("Use imperial system");
 
         StringBuilder output = new StringBuilder();
 
         calculateButton.setText("Calculate");
-        calculateButton.setLayoutX(154);
-        calculateButton.setLayoutY(150);
+        calculateButton.setLayoutX(Coordinates.CALCBUTTON1.WIDTH);
+        calculateButton.setLayoutY(Coordinates.CALCBUTTON1.HEIGHT);
         calculateButton.setOnAction(b -> {
             String[] input = new String[]{distanceInput.getText(), gasInput.getText()};
 
@@ -94,8 +96,8 @@ public final class SceneBuilder {
             }
 
             Label text = new Label(String.valueOf(output));
-            text.setLayoutX(15);
-            text.setLayoutY(200);
+            text.setLayoutX(Coordinates.RESULT1.WIDTH);
+            text.setLayoutY(Coordinates.RESULT1.HEIGHT);
             mileageCalcPane.getChildren().add(text);
 
         });
@@ -103,8 +105,8 @@ public final class SceneBuilder {
 
         // dublicate
         backButton.setText("Back");
-        backButton.setLayoutX(22);
-        backButton.setLayoutY(150);
+        backButton.setLayoutX(Coordinates.BACKBUTTON1.WIDTH);
+        backButton.setLayoutY(Coordinates.BACKBUTTON1.HEIGHT);
         backButton.setOnAction(b -> stage.setScene(SceneBuilder.createOptions()));
 
         mileageCalcPane.getChildren().add(distanceLabel);
@@ -210,39 +212,39 @@ public final class SceneBuilder {
         );
 
         calculateButton.setText("Calculate");
-        calculateButton.setLayoutX(154);
-        calculateButton.setLayoutY(257);
+        calculateButton.setLayoutX(Coordinates.CALCBUTTON2.WIDTH);
+        calculateButton.setLayoutY(Coordinates.CALCBUTTON2.HEIGHT);
 
         backButton.setText("Back");
-        backButton.setLayoutX(22);
-        backButton.setLayoutY(257);
+        backButton.setLayoutX(Coordinates.BACKBUTTON2.WIDTH);
+        backButton.setLayoutY(Coordinates.BACKBUTTON2.HEIGHT);
         backButton.setOnAction(b -> stage.setScene(SceneBuilder.createOptions()));
 
         isDifference.setText("Calculate displacement difference");
-        isDifference.setLayoutX(16);
-        isDifference.setLayoutY(222);
+        isDifference.setLayoutX(Coordinates.ISDIFFERENCE.WIDTH);
+        isDifference.setLayoutY(Coordinates.ISDIFFERENCE.HEIGHT);
 
 
-        boreLabel.setLayoutY(25);
-        boreInput.setLayoutY(20);
-        boreInput.setLayoutX(91);
+        boreInput.setLayoutX(Coordinates.BORE.WIDTH);
+        boreLabel.setLayoutY(Coordinates.BORE.HEIGHT);
+        boreInput.setLayoutY(Coordinates.BORE.HEIGHT);
 
-        strokeLabel.setLayoutY(65);
-        strokeInput.setLayoutY(60);
-        strokeInput.setLayoutX(91);
+        strokeInput.setLayoutX(Coordinates.STROKE.WIDTH);
+        strokeLabel.setLayoutY(Coordinates.STROKE.HEIGHT);
+        strokeInput.setLayoutY(Coordinates.STROKE.HEIGHT);
 
-        cylinderCountLabel.setLayoutY(105);
-        cylinderCountInput.setLayoutY(100);
-        cylinderCountInput.setLayoutX(91);
+        cylinderCountInput.setLayoutX(Coordinates.CYLCOUNT.WIDTH);
+        cylinderCountLabel.setLayoutY(Coordinates.CYLCOUNT.HEIGHT);
+        cylinderCountInput.setLayoutY(Coordinates.CYLCOUNT.HEIGHT);
 
 
-        newBoreLabel.setLayoutY(145);
-        newBoreInput.setLayoutY(140);
-        newBoreInput.setLayoutX(91);
+        newBoreInput.setLayoutX(Coordinates.NEWBORE.WIDTH);
+        newBoreLabel.setLayoutY(Coordinates.NEWBORE.HEIGHT);
+        newBoreInput.setLayoutY(Coordinates.NEWBORE.HEIGHT);
 
-        newStrokeLabel.setLayoutY(185);
-        newStrokeInput.setLayoutY(180);
-        newStrokeInput.setLayoutX(91);
+        newStrokeInput.setLayoutX(Coordinates.NEWSTROKE.WIDTH);
+        newStrokeLabel.setLayoutY(Coordinates.NEWSTROKE.HEIGHT);
+        newStrokeInput.setLayoutY(Coordinates.NEWSTROKE.HEIGHT);
 
 
         displacementCalcPane.getChildren().add(boreLabel);

@@ -20,7 +20,7 @@ public class Engine implements Engineable {
         return this.gasMileage;
     }
 
-    public void setGasMileage(double gasMileage) {
+    private void setGasMileage(double gasMileage) {
         this.gasMileage = gasMileage;
     }
 
@@ -29,19 +29,7 @@ public class Engine implements Engineable {
         return Double.parseDouble(displacement);
     }
 
-    public float getAirFuelMixture() {
-        return this.airFuelMixture;
-    }
-
-    public float getCylBore() {
-        return this.cylBore;
-    }
-
-    public float getCylStroke() {
-        return this.cylStroke;
-    }
-
-    public int getCylCount() {
+    private int getCylCount() {
         return this.cylCount;
     }
 
@@ -71,14 +59,6 @@ public class Engine implements Engineable {
         this.setCylCount(cylCount);
         this.setDisplacement(this.calculateNewDisplacement(cylBore, cylStroke));
     }
-
-//    public Engine(float airFuelMixture, float cylBore, float cylStroke, int cylCount) {
-//        this.setAirFuelMixture(airFuelMixture);
-//        this.setCylBore(cylBore);
-//        this.setCylStroke(cylStroke);
-//        this.setCylCount(cylCount);
-//        this.setDisplacement(this.calculateNewDisplacement(cylBore, cylStroke));
-//    }
 
     public Engine (double distance, double gasUsed){
         this.setGasMileage(this.calculateMileage(distance,gasUsed));
