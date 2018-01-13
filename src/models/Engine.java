@@ -7,8 +7,6 @@ import interfaces.Engineable;
  */
 public class Engine implements Engineable {
 
-    private float airFuelMixture; //unused
-
     private float cylBore;
     private float cylStroke;
     private int cylCount;
@@ -17,7 +15,13 @@ public class Engine implements Engineable {
     private double gasMileage;
 
     public double getGasMileage() {
-        return this.gasMileage;
+        String gas = String.valueOf(this.gasMileage);
+
+        if (gas.length() > 3){
+            return Double.parseDouble(gas.substring(0,4));
+        }
+
+        return Double.parseDouble(gas);
     }
 
     private void setGasMileage(double gasMileage) {
@@ -35,10 +39,6 @@ public class Engine implements Engineable {
 
     private void setDisplacement(double displacement) {
         this.displacement = displacement;
-    }
-
-    private void setAirFuelMixture(float airFuelMixture) {
-        this.airFuelMixture = airFuelMixture;
     }
 
     private void setCylBore(float cylBore) {

@@ -17,20 +17,20 @@ public final class SceneBuilder {
 
 
     // keep track of initial stage (main menu)
-    public static void copyStage(Stage stage1) {
+    protected static void copyStage(Stage stage1) {
         stage = stage1;
     }
 
-    public static Scene createOptions() {
+    protected static Scene createOptions() {
         Button calculateMileage = new Button("Calculate mileage");
         Button calculateDisplacementDiff = new Button("Calculate disp. difference");
 
-        calculateMileage.setMinWidth(Coordinates.MILEAGEBUTTON.boundaryWidth); // why is it even used
+        calculateMileage.setMinWidth(Coordinates.MILEAGEBUTTON.BOUNDARYWIDTH);
         calculateMileage.setLayoutX(Coordinates.MILEAGEBUTTON.WIDTH);
         calculateMileage.setLayoutY(Coordinates.MILEAGEBUTTON.HEIGHT);
         calculateMileage.setOnAction(e -> stage.setScene(SceneBuilder.createMileageCalculator()));
 
-        calculateDisplacementDiff.setMaxWidth(Coordinates.DISPBUTTON.boundaryWidth); //why is it even used
+        calculateDisplacementDiff.setMaxWidth(Coordinates.DISPBUTTON.BOUNDARYWIDTH);
         calculateDisplacementDiff.setLayoutX(Coordinates.DISPBUTTON.WIDTH);
         calculateDisplacementDiff.setLayoutY(Coordinates.DISPBUTTON.HEIGHT);
         calculateDisplacementDiff.setOnAction(e -> stage.setScene(SceneBuilder.createDisplacementDiffCalculator()));
@@ -43,7 +43,8 @@ public final class SceneBuilder {
     }
 
 
-    public static Scene createMileageCalculator() {
+    private static Scene createMileageCalculator() {
+
         Pane mileageCalcPane = new Pane();
 
         Label distanceLabel = new Label("Distance:");
@@ -69,13 +70,18 @@ public final class SceneBuilder {
         isImperial.setLayoutY(Coordinates.ISIMPERIAL.HEIGHT);
         isImperial.setText("Use imperial system");
 
-        StringBuilder output = new StringBuilder();
+        Label text = new Label();
+        text.setLayoutX(Coordinates.RESULT1.WIDTH);
+        text.setLayoutY(Coordinates.RESULT1.HEIGHT);
 
         calculateButton.setText("Calculate");
         calculateButton.setLayoutX(Coordinates.CALCBUTTON1.WIDTH);
         calculateButton.setLayoutY(Coordinates.CALCBUTTON1.HEIGHT);
         calculateButton.setOnAction(b -> {
             String[] input = new String[]{distanceInput.getText(), gasInput.getText()};
+
+            StringBuilder output = new StringBuilder();
+            mileageCalcPane.getChildren().remove(text); // prevent adding dublicate children exception
 
             if (ConsoleHandler.isInputValid(input)) {
                 double distance = Double.parseDouble(distanceInput.getText());
@@ -95,11 +101,8 @@ public final class SceneBuilder {
                 output.append("Invalid input!");
             }
 
-            Label text = new Label(String.valueOf(output));
-            text.setLayoutX(Coordinates.RESULT1.WIDTH);
-            text.setLayoutY(Coordinates.RESULT1.HEIGHT);
+            text.setText(String.valueOf(output));
             mileageCalcPane.getChildren().add(text);
-
         });
 
 
@@ -121,7 +124,7 @@ public final class SceneBuilder {
         return new Scene(mileageCalcPane, 233, 255);
     }
 
-    public static Scene createDisplacementDiffCalculator() {
+    private static Scene createDisplacementDiffCalculator() {
 
         Pane displacementCalcPane = new Pane();
 
@@ -142,6 +145,9 @@ public final class SceneBuilder {
         Button backButton = new Button();
         Button calculateButton = new Button();
 
+        Label text = new Label();
+        text.setLayoutX(Coordinates.RESULT2.WIDTH);
+        text.setLayoutY(Coordinates.RESULT2.HEIGHT);
 
         //needs refactoring
         calculateButton.setOnAction(b -> {
@@ -151,6 +157,7 @@ public final class SceneBuilder {
                     String[] newInputArgs = new String[]{newBoreInput.getText(), newStrokeInput.getText()};
 
                     StringBuilder output = new StringBuilder();
+                    displacementCalcPane.getChildren().remove(text);
 
                     // check if required info to create an engine is present
                     if (ConsoleHandler.isInputValid(inputArgs)) {
@@ -160,7 +167,6 @@ public final class SceneBuilder {
                         if (isDifference.isSelected()) {
                             if (ConsoleHandler.isInputValid(newInputArgs)) {
                                 float[] params = ConsoleHandler.compileNewBoreAndStroke(newBoreInput.getText(), newStrokeInput.getText());
-
 
                                 output.append("New displacement is: ");
                                 output.append(engine.calculateNewDisplacement(params[0], params[1]));
@@ -203,10 +209,7 @@ public final class SceneBuilder {
                         output.append("Invalid input!");
                     }
 
-                    Label text = new Label(String.valueOf(output));
-                    text.setLayoutX(15);
-                    text.setLayoutY(310);
-
+                    text.setText(String.valueOf(output));
                     displacementCalcPane.getChildren().add(text);
                 }
         );

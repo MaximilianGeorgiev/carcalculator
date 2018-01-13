@@ -7,14 +7,14 @@ import java.io.IOException;
 /**
  * Created by sasaas on 2.12.2017 г..
  */
-public class Main extends Application{
-    Stage stage;
-    Scene displacementOptionsScene;
+public class Main extends Application {
+   private Stage stage;
+   private Scene displacementOptionsScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
-        primaryStage.setTitle("Displacement calculator");
+        primaryStage.setTitle("Car calculator");
 
         SceneBuilder.copyStage(stage);
 

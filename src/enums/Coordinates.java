@@ -20,12 +20,13 @@ public enum Coordinates {
     STROKE(91, 60),
     CYLCOUNT (91, 100),
     NEWBORE(91, 140),
-    NEWSTROKE(91, 180);
+    NEWSTROKE(91, 180),
+    RESULT2(15, 310);
 
 
     public int WIDTH;
     public int HEIGHT;
-    public int boundaryWidth;
+    public int BOUNDARYWIDTH;
 
     Coordinates(int width, int height) {
         this.WIDTH = width;
@@ -33,7 +34,7 @@ public enum Coordinates {
     }
 
     Coordinates(int width, int height, int boundaryWidth) {
-        this.boundaryWidth = boundaryWidth;
+        this.BOUNDARYWIDTH = boundaryWidth;
         this.WIDTH = width;
         this.HEIGHT = height;
     }
