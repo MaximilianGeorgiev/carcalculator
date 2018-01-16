@@ -1,3 +1,5 @@
+package app;
+
 import models.Engine;
 
 /**
@@ -5,7 +7,8 @@ import models.Engine;
  */
 public class ConsoleHandler {
 
-    public static Engine compileVehiclePart(String... args)  {
+
+    public static Engine compileEngine(String... args)  {
 
         float cylBore = Float.parseFloat(args[0]);
         float cylStroke = Float.parseFloat(args[1]);

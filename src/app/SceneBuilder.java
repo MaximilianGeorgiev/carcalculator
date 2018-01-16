@@ -1,4 +1,7 @@
+package app;
+
 import enums.Coordinates;
+import factories.TyreFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -12,9 +15,8 @@ import models.Engine;
 /**
  * Created by sasaas on 10.12.2017 г..
  */
-public final class SceneBuilder {
+public class SceneBuilder {
     private static Stage stage;
-
 
     // keep track of initial stage (main menu)
     protected static void copyStage(Stage stage1) {
@@ -24,22 +26,118 @@ public final class SceneBuilder {
     protected static Scene createOptions() {
         Button calculateMileage = new Button("Calculate mileage");
         Button calculateDisplacementDiff = new Button("Calculate disp. difference");
+        Button calculateTyreDifference = new Button("Calculate tyre diameter");
 
         calculateMileage.setMinWidth(Coordinates.MILEAGEBUTTON.BOUNDARYWIDTH);
         calculateMileage.setLayoutX(Coordinates.MILEAGEBUTTON.WIDTH);
         calculateMileage.setLayoutY(Coordinates.MILEAGEBUTTON.HEIGHT);
-        calculateMileage.setOnAction(e -> stage.setScene(SceneBuilder.createMileageCalculator()));
+        calculateMileage.setOnAction(e -> stage.setScene(createMileageCalculator()));
 
         calculateDisplacementDiff.setMaxWidth(Coordinates.DISPBUTTON.BOUNDARYWIDTH);
         calculateDisplacementDiff.setLayoutX(Coordinates.DISPBUTTON.WIDTH);
         calculateDisplacementDiff.setLayoutY(Coordinates.DISPBUTTON.HEIGHT);
-        calculateDisplacementDiff.setOnAction(e -> stage.setScene(SceneBuilder.createDisplacementDiffCalculator()));
+        calculateDisplacementDiff.setOnAction(e -> stage.setScene(createDisplacementDiffCalculator()));
+
+        calculateTyreDifference.setMaxWidth(Coordinates.TYREBUTTON.BOUNDARYWIDTH);
+        calculateTyreDifference.setLayoutX(Coordinates.TYREBUTTON.WIDTH);
+        calculateTyreDifference.setLayoutY(Coordinates.TYREBUTTON.HEIGHT);
+        calculateTyreDifference.setOnAction(e -> stage.setScene(createTyreCalculator()));
 
         Pane layout = new Pane();
         layout.getChildren().add(calculateMileage);
         layout.getChildren().add(calculateDisplacementDiff);
+        layout.getChildren().add(calculateTyreDifference);
 
-        return new Scene(layout, 233, 200);
+        return new Scene(layout, 233, 300);
+    }
+
+    private static Scene createTyreCalculator() {
+        Pane tyreCalculatorPane = new Pane();
+
+        Label tyreWidth = new Label("Tyre width:");
+        Label tyreAspectRatio = new Label("Tyre aspect ratio:");
+        Label rimDiameter = new Label("Rim diameter:");
+
+        TextField tyreWidthInput = new TextField();
+        TextField tyreAspectInput = new TextField();
+        TextField rimDiameterInput = new TextField();
+
+        Label tyreWidth2 = new Label("Tyre width:");
+        Label tyreAspectRatio2 = new Label("Tyre aspect ratio:");
+        Label rimDiameter2 = new Label("Rim diameter:");
+
+        TextField tyreWidthInput2 = new TextField();
+        TextField tyreAspectInput2 = new TextField();
+        TextField rimDiameterInput2 = new TextField();
+
+        Button backButton = new Button("Back");
+        Button calculateButton = new Button("Calculate");
+
+
+        tyreWidth.setLayoutY(Coordinates.TYREWIDTH.HEIGHT);
+        tyreWidth2.setLayoutY(Coordinates.TYREWIDTH2.HEIGHT);
+        tyreWidthInput.setLayoutX(Coordinates.TYREWIDTH.WIDTH);
+        tyreWidthInput.setLayoutY(Coordinates.TYREWIDTH.HEIGHT);
+        tyreWidthInput2.setLayoutX(Coordinates.TYREWIDTH2.WIDTH);
+        tyreWidthInput2.setLayoutY(Coordinates.TYREWIDTH2.HEIGHT);
+
+        tyreAspectRatio.setLayoutY(Coordinates.TYREASPECT.HEIGHT);
+        tyreAspectRatio2.setLayoutY(Coordinates.TYREASPECT2.HEIGHT);
+        tyreAspectInput.setLayoutX(Coordinates.TYREASPECT.WIDTH);
+        tyreAspectInput.setLayoutY(Coordinates.TYREASPECT.HEIGHT);
+        tyreAspectInput2.setLayoutX(Coordinates.TYREASPECT2.WIDTH);
+        tyreAspectInput2.setLayoutY(Coordinates.TYREASPECT2.HEIGHT);
+
+        rimDiameter.setLayoutY(Coordinates.RIMDIAMETER.HEIGHT);
+        rimDiameter2.setLayoutY(Coordinates.RIMDIAMETER2.HEIGHT);
+        rimDiameterInput.setLayoutX(Coordinates.RIMDIAMETER.WIDTH);
+        rimDiameterInput.setLayoutY(Coordinates.RIMDIAMETER.HEIGHT);
+        rimDiameterInput2.setLayoutX(Coordinates.RIMDIAMETER2.WIDTH);
+        rimDiameterInput2.setLayoutY(Coordinates.RIMDIAMETER2.HEIGHT);
+
+        backButton.setLayoutX(Coordinates.BACKBUTTON3.WIDTH);
+        backButton.setLayoutY(Coordinates.BACKBUTTON3.HEIGHT);
+        backButton.setOnAction(b -> stage.setScene(createOptions()));
+
+        Label text = new Label();
+        text.setLayoutX(Coordinates.RESULT3.WIDTH);
+        text.setLayoutY(Coordinates.RESULT3.HEIGHT);
+
+        calculateButton.setLayoutX(Coordinates.CALCBUTTON3.WIDTH);
+        calculateButton.setLayoutY(Coordinates.CALCBUTTON3.HEIGHT);
+        calculateButton.setOnAction(c -> {
+            String[] input = new String[]{
+                    tyreWidthInput.getText(), tyreAspectInput.getText(), rimDiameterInput.getText()};
+
+            String[] input2 = new String[]{
+                    tyreWidthInput2.getText(), tyreAspectInput2.getText(), rimDiameterInput2.getText()};
+
+            tyreCalculatorPane.getChildren().remove(text);
+
+           text.setText(TyreFactory.compileTyre(input, input2));
+
+
+            tyreCalculatorPane.getChildren().add(text);
+        });
+
+
+        tyreCalculatorPane.getChildren().add(tyreWidth);
+        tyreCalculatorPane.getChildren().add(tyreWidth2);
+        tyreCalculatorPane.getChildren().add(tyreAspectRatio);
+        tyreCalculatorPane.getChildren().add(tyreAspectRatio2);
+        tyreCalculatorPane.getChildren().add(rimDiameter);
+        tyreCalculatorPane.getChildren().add(rimDiameter2);
+        tyreCalculatorPane.getChildren().add(tyreWidthInput);
+        tyreCalculatorPane.getChildren().add(tyreWidthInput2);
+        tyreCalculatorPane.getChildren().add(tyreAspectInput);
+        tyreCalculatorPane.getChildren().add(tyreAspectInput2);
+        tyreCalculatorPane.getChildren().add(rimDiameterInput);
+        tyreCalculatorPane.getChildren().add(rimDiameterInput2);
+        tyreCalculatorPane.getChildren().add(backButton);
+        tyreCalculatorPane.getChildren().add(calculateButton);
+
+
+        return new Scene(tyreCalculatorPane, 280, 388);
     }
 
 
@@ -161,7 +259,7 @@ public final class SceneBuilder {
 
                     // check if required info to create an engine is present
                     if (ConsoleHandler.isInputValid(inputArgs)) {
-                        Engine engine = ConsoleHandler.compileVehiclePart(inputArgs);
+                        Engine engine = ConsoleHandler.compileEngine(inputArgs);
 
                         // only if the request is to calculate DIFFERENCE then check the other params (newbore, newstroke)
                         if (isDifference.isSelected()) {

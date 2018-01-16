@@ -7,6 +7,7 @@ package enums;
 public enum Coordinates {
     MILEAGEBUTTON(44, 44, 150),
     DISPBUTTON(44, 114, 150),
+    TYREBUTTON(44, 184, 150),
     DISTANCE(80, 25),
     GASUSED(80, 65),
     ISIMPERIAL(55, 105),
@@ -21,7 +22,16 @@ public enum Coordinates {
     CYLCOUNT (91, 100),
     NEWBORE(91, 140),
     NEWSTROKE(91, 180),
-    RESULT2(15, 310);
+    RESULT2(15, 310),
+    TYREWIDTH(100,25),
+    TYREASPECT(100, 65),
+    RIMDIAMETER(100, 105),
+    TYREWIDTH2(100, 165),
+    TYREASPECT2(100, 205),
+    RIMDIAMETER2(100, 245),
+    BACKBUTTON3(35, 288),
+    CALCBUTTON3(170, 288),
+    RESULT3(44, 333);
 
 
     public int WIDTH;
