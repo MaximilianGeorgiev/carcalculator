@@ -1,6 +1,7 @@
 package app;
 
 import enums.Coordinates;
+import factories.EngineFactory;
 import factories.TyreFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,12 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import models.Engine;
 
-
-/**
- * Created by sasaas on 10.12.2017 г..
- */
 public class SceneBuilder {
     private static Stage stage;
 
@@ -48,7 +44,7 @@ public class SceneBuilder {
         layout.getChildren().add(calculateDisplacementDiff);
         layout.getChildren().add(calculateTyreDifference);
 
-        return new Scene(layout, 233, 300);
+        return new Scene(layout, Coordinates.OPTIONSPANE.WIDTH, Coordinates.OPTIONSPANE.HEIGHT);
     }
 
     private static Scene createTyreCalculator() {
@@ -112,11 +108,9 @@ public class SceneBuilder {
             String[] input2 = new String[]{
                     tyreWidthInput2.getText(), tyreAspectInput2.getText(), rimDiameterInput2.getText()};
 
-            tyreCalculatorPane.getChildren().remove(text);
+            tyreCalculatorPane.getChildren().remove(text); // prevent adding dublicate children exception
 
-           text.setText(TyreFactory.compileTyre(input, input2));
-
-
+            text.setText(TyreFactory.getCalculationResult(input, input2));
             tyreCalculatorPane.getChildren().add(text);
         });
 
@@ -137,9 +131,8 @@ public class SceneBuilder {
         tyreCalculatorPane.getChildren().add(calculateButton);
 
 
-        return new Scene(tyreCalculatorPane, 280, 388);
+        return new Scene(tyreCalculatorPane, Coordinates.TYREPANE.WIDTH, Coordinates.TYREPANE.HEIGHT);
     }
-
 
     private static Scene createMileageCalculator() {
 
@@ -178,28 +171,9 @@ public class SceneBuilder {
         calculateButton.setOnAction(b -> {
             String[] input = new String[]{distanceInput.getText(), gasInput.getText()};
 
-            StringBuilder output = new StringBuilder();
             mileageCalcPane.getChildren().remove(text); // prevent adding dublicate children exception
 
-            if (ConsoleHandler.isInputValid(input)) {
-                double distance = Double.parseDouble(distanceInput.getText());
-                double gasUsed = Double.parseDouble(gasInput.getText());
-
-                Engine engine = new Engine(distance, gasUsed);
-
-                output.append("Gas mileage is: ");
-                output.append(engine.getGasMileage());
-
-                if (isImperial.isSelected()) {
-                    output.append(" MPG");
-                } else {
-                    output.append(" L/100 km");
-                }
-            } else {
-                output.append("Invalid input!");
-            }
-
-            text.setText(String.valueOf(output));
+            text.setText(EngineFactory.getMileageCalculationResult(input, isImperial.isSelected()));
             mileageCalcPane.getChildren().add(text);
         });
 
@@ -219,7 +193,7 @@ public class SceneBuilder {
         mileageCalcPane.getChildren().add(calculateButton);
 
 
-        return new Scene(mileageCalcPane, 233, 255);
+        return new Scene(mileageCalcPane, Coordinates.MILEAGEPANE.WIDTH, Coordinates.MILEAGEPANE.HEIGHT);
     }
 
     private static Scene createDisplacementDiffCalculator() {
@@ -247,67 +221,15 @@ public class SceneBuilder {
         text.setLayoutX(Coordinates.RESULT2.WIDTH);
         text.setLayoutY(Coordinates.RESULT2.HEIGHT);
 
-        //needs refactoring
         calculateButton.setOnAction(b -> {
                     String[] inputArgs = new String[]{boreInput.getText(), strokeInput.getText(),
                             cylinderCountInput.getText()};
 
                     String[] newInputArgs = new String[]{newBoreInput.getText(), newStrokeInput.getText()};
 
-                    StringBuilder output = new StringBuilder();
-                    displacementCalcPane.getChildren().remove(text);
+                    displacementCalcPane.getChildren().remove(text); // prevent dublicate children exception
 
-                    // check if required info to create an engine is present
-                    if (ConsoleHandler.isInputValid(inputArgs)) {
-                        Engine engine = ConsoleHandler.compileEngine(inputArgs);
-
-                        // only if the request is to calculate DIFFERENCE then check the other params (newbore, newstroke)
-                        if (isDifference.isSelected()) {
-                            if (ConsoleHandler.isInputValid(newInputArgs)) {
-                                float[] params = ConsoleHandler.compileNewBoreAndStroke(newBoreInput.getText(), newStrokeInput.getText());
-
-                                output.append("New displacement is: ");
-                                output.append(engine.calculateNewDisplacement(params[0], params[1]));
-                                output.append(" cc\n");
-                                output.append("Which is ");
-
-                                double difference = 0;
-                                double percentDifference = 0;
-
-                                double newDisp = engine.calculateNewDisplacement(params[0], params[1]);
-                                double oldDisp = engine.getDisplacement();
-
-                                // EXTRACT COMMAND
-                                if (newDisp > oldDisp) {
-                                    difference = newDisp - oldDisp;
-                                    output.append(difference);
-                                    output.append(" cc and ");
-
-                                    output.append(ConsoleHandler.createOutputDifference(oldDisp, newDisp, difference));
-                                    output.append(" % bigger.");
-                                } else if (newDisp < oldDisp) {
-                                    difference = oldDisp - newDisp;
-                                    output.append(difference);
-                                    output.append(" cc and ");
-
-                                    output.append(ConsoleHandler.createOutputDifference(oldDisp, newDisp, difference));
-                                    output.append(" % smaller.");
-                                } else {
-                                    output.append("same as initial.");
-                                }
-                            } else {
-                                output.append("Invalid input!");
-                            }
-                        } else {
-                            output.append("Displacement is: ");
-                            output.append(engine.getDisplacement());
-                            output.append(" cc");
-                        }
-                    } else {
-                        output.append("Invalid input!");
-                    }
-
-                    text.setText(String.valueOf(output));
+                    text.setText(EngineFactory.getDisplacementCalculationResult(inputArgs, newInputArgs, isDifference.isSelected()));
                     displacementCalcPane.getChildren().add(text);
                 }
         );
@@ -364,7 +286,7 @@ public class SceneBuilder {
         displacementCalcPane.getChildren().add(backButton);
         displacementCalcPane.getChildren().add(isDifference);
 
-        return new Scene(displacementCalcPane, 255, 355);
+        return new Scene(displacementCalcPane, Coordinates.DISPPANE.WIDTH, Coordinates.DISPPANE.HEIGHT);
     }
 }
 

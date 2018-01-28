@@ -7,8 +7,8 @@ import models.Tyre;
  * Created by sasaas on 15.1.2018 г..
  */
 public final class TyreFactory {
-
-    public static String compileTyre(String[] args1, String[] args2){
+    
+    public static String getCalculationResult(String[] args1, String[] args2){
 
         boolean isComparison = false;
         StringBuilder output = new StringBuilder();
@@ -44,5 +44,6 @@ public final class TyreFactory {
         output.append("Invalid input.");
         return output.toString();
     }
+
 
 }
