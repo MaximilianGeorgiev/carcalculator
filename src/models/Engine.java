@@ -1,6 +1,8 @@
 package models;
 
+import app.ConsoleHandler;
 import interfaces.Engineable;
+
 
 /**
  * Created by sasaas on 2.12.2017 г..
@@ -15,13 +17,7 @@ public class Engine implements Engineable {
     private double gasMileage;
 
     public double getGasMileage() {
-        String gas = String.valueOf(this.gasMileage);
-
-        if (gas.length() > 3){
-            return Double.parseDouble(gas.substring(0,4));
-        }
-
-        return Double.parseDouble(gas);
+        return this.gasMileage;
     }
 
     private void setGasMileage(double gasMileage) {
@@ -29,7 +25,7 @@ public class Engine implements Engineable {
     }
 
     public double getDisplacement() {
-        String displacement = String.valueOf(this.displacement).substring(0, 4);
+        String displacement = String.valueOf(this.displacement);
         return Double.parseDouble(displacement);
     }
 
@@ -60,8 +56,8 @@ public class Engine implements Engineable {
         this.setDisplacement(this.calculateNewDisplacement(cylBore, cylStroke));
     }
 
-    public Engine (double distance, double gasUsed){
-        this.setGasMileage(this.calculateMileage(distance,gasUsed));
+    public Engine(double distance, double gasUsed, boolean isImperial) {
+        this.setGasMileage(this.calculateMileage(distance, gasUsed, isImperial));
     }
 
 
@@ -69,14 +65,35 @@ public class Engine implements Engineable {
     public double calculateNewDisplacement(float newBore, float newStroke) {
         double value = (Math.PI / 4) * (Math.pow(newBore, 2)) * newStroke * this.getCylCount();
 
-        String newDisplacement = String.valueOf(value).substring(0, 4);
+        String newDisplacement = String.valueOf(value);
+
+
+       /*
+          If it has more than 4 characters it will output a brief result: 1500.2 instead of 1500.2222222222
+          If it has less than 4 it will not throw out of boundaries exception and will show full result
+          If it starts with 0.0 it won't show 0.0 cc but instead will show 0.00159159 cc (will be accurate)
+        */
+
+        newDisplacement = (newDisplacement.length() > 4 && !newDisplacement.startsWith("0.0"))
+                ? newDisplacement.substring(0, 4) : newDisplacement;
+
 
         return Double.parseDouble(newDisplacement);
     }
 
     @Override
-    public double calculateMileage(double distance, double quantity) {
-        return distance / quantity;
+    public double calculateMileage(double distance, double quantity, boolean isImperial) {
+        double value = 0;
+
+        // it is calculated different since it's not accurate otherwise
+        value = (isImperial) ? distance / quantity : (100 * quantity / distance);
+
+        String mileage = String.valueOf(value);
+
+        // see this.calculateNewDisplacement for reference
+        mileage = ((mileage).length() > 4) ? mileage.substring(0, mileage.indexOf(".")) : mileage;
+
+        return Double.parseDouble(mileage);
     }
 
 }

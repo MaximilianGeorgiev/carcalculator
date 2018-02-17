@@ -15,7 +15,7 @@ public final class TyreFactory {
 
         if (ConsoleHandler.isInputValid(args1)) {
             if (ConsoleHandler.isInputValid(args2)) {
-                isComparison = true;
+                isComparison = true; // if all fields contain data then it's comparison
             }
 
             Tyre tyre1 = new Tyre(Double.parseDouble(args1[0]),
@@ -44,6 +44,4 @@ public final class TyreFactory {
         output.append("Invalid input.");
         return output.toString();
     }
-
-
 }

@@ -2,13 +2,15 @@ package app;
 
 import models.Engine;
 
+import java.util.regex.Pattern;
+
+
 /**
  * Created by sasaas on 2.12.2017 г..
  */
-public class ConsoleHandler {
+public final class ConsoleHandler {
 
-
-    public static Engine compileEngine(String... args)  {
+    public static Engine compileEngine(String... args) {
 
         float cylBore = Float.parseFloat(args[0]);
         float cylStroke = Float.parseFloat(args[1]);
@@ -34,10 +36,10 @@ public class ConsoleHandler {
         return true;
     }
 
-    public static String createOutputDifference(double oldDisp, double newDisp, double difference){
-        double average = (newDisp+oldDisp) / 2;
-        double percentDifference = (difference / average ) * 100;
+    public static String createOutputDifference(double oldDisp, double newDisp, double difference) {
+        double average = (newDisp + oldDisp) / 2;
+        double percentDifference = (difference / average) * 100;
 
-        return String.valueOf(percentDifference).substring(0,4);
+        return String.valueOf(percentDifference).substring(0, 4);
     }
 }

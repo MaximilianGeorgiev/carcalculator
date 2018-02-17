@@ -7,6 +7,6 @@ package interfaces;
 public interface Engineable {
     double calculateNewDisplacement(float newBore, float newStroke);
 
-    double calculateMileage(double distance, double quantity);
+    double calculateMileage(double distance, double quantity, boolean isImperial);
 
 }

@@ -76,10 +76,11 @@ public final class EngineFactory {
             double distance = Double.parseDouble(distanceInput);
             double gasUsed = Double.parseDouble(gasInput);
 
-            Engine engine = new Engine(distance, gasUsed);
+            Engine engine = new Engine(distance, gasUsed, isImperial);
 
             output.append("Gas mileage is: ");
             output.append(engine.getGasMileage());
+
 
             if (isImperial) {
                 output.append(" MPG");

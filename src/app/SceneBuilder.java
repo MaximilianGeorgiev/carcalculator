@@ -116,16 +116,16 @@ public class SceneBuilder {
 
 
         tyreCalculatorPane.getChildren().add(tyreWidth);
-        tyreCalculatorPane.getChildren().add(tyreWidth2);
         tyreCalculatorPane.getChildren().add(tyreAspectRatio);
-        tyreCalculatorPane.getChildren().add(tyreAspectRatio2);
         tyreCalculatorPane.getChildren().add(rimDiameter);
-        tyreCalculatorPane.getChildren().add(rimDiameter2);
         tyreCalculatorPane.getChildren().add(tyreWidthInput);
-        tyreCalculatorPane.getChildren().add(tyreWidthInput2);
         tyreCalculatorPane.getChildren().add(tyreAspectInput);
-        tyreCalculatorPane.getChildren().add(tyreAspectInput2);
         tyreCalculatorPane.getChildren().add(rimDiameterInput);
+        tyreCalculatorPane.getChildren().add(tyreWidth2);
+        tyreCalculatorPane.getChildren().add(tyreAspectRatio2);
+        tyreCalculatorPane.getChildren().add(rimDiameter2);
+        tyreCalculatorPane.getChildren().add(tyreWidthInput2);
+        tyreCalculatorPane.getChildren().add(tyreAspectInput2);
         tyreCalculatorPane.getChildren().add(rimDiameterInput2);
         tyreCalculatorPane.getChildren().add(backButton);
         tyreCalculatorPane.getChildren().add(calculateButton);

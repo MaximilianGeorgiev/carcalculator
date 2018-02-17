@@ -12,24 +12,12 @@ public class Tyre implements Tyreable {
     private int rimDiameter;
 
 
-    public double getWidth() {
-        return this.width;
-    }
-
     private void setWidth(double width) {
         this.width = width;
     }
 
-    public double getAspectRatio() {
-        return aspectRatio;
-    }
-
     private void setAspectRatio(double aspectRatio) {
         this.aspectRatio = aspectRatio;
-    }
-
-    public int getRimDiameter() {
-        return this.rimDiameter;
     }
 
     private void setRimDiameter(int rimDiameter) {
@@ -43,9 +31,9 @@ public class Tyre implements Tyreable {
 
 
     public Tyre(double width, double aspectRatio, int rimDiameter) {
-        this.width = width;
-        this.aspectRatio = aspectRatio;
-        this.rimDiameter = rimDiameter;
+        this.setWidth(width);
+        this.setAspectRatio(aspectRatio);
+        this.setRimDiameter(rimDiameter);
         this.resultDiameter = this.calculateDiameter(width, aspectRatio, rimDiameter);
     }
 
@@ -53,7 +41,6 @@ public class Tyre implements Tyreable {
     public double calculateDiameter(double width, double aspectRatio, int rimDiameter) {
         double sectionWidth = width / 25.4;
         double sectionHeight = sectionWidth * (aspectRatio / 100);
-
 
         return sectionHeight * 2 + rimDiameter;
     }
@@ -66,6 +53,7 @@ public class Tyre implements Tyreable {
 
         StringBuilder output = new StringBuilder();
 
+        // no comparison
         if (firstTyreDiameter == secondTyreDiameter) {
             output.append("Diameter is: ");
             output.append(String.valueOf(firstTyreDiameter));
@@ -86,7 +74,6 @@ public class Tyre implements Tyreable {
             output.append(String.valueOf(secondTyreDiameter - firstTyreDiameter));
             output.append("\" bigger.");
         }
-
 
         return output.toString();
     }
