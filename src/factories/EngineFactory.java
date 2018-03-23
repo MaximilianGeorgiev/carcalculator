@@ -70,15 +70,15 @@ public final class EngineFactory {
         StringBuilder output = new StringBuilder();
 
         String distanceInput = inputArgs[0];
-        String gasInput = inputArgs[1];
+        String fuelInput = inputArgs[1];
 
         if (ConsoleHandler.isInputValid(inputArgs)) {
             double distance = Double.parseDouble(distanceInput);
-            double gasUsed = Double.parseDouble(gasInput);
+            double fuelUsed = Double.parseDouble(fuelInput);
 
-            Engine engine = new Engine(distance, gasUsed, isImperial);
+            Engine engine = new Engine(distance, fuelUsed, isImperial);
 
-            output.append("Gas mileage is: ");
+            output.append("Mileage is: ");
             output.append(engine.getGasMileage());
 
 

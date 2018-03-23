@@ -11,7 +11,6 @@ public class Tyre implements Tyreable {
     private double resultDiameter;
     private int rimDiameter;
 
-
     private void setWidth(double width) {
         this.width = width;
     }

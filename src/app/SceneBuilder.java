@@ -8,7 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class SceneBuilder {
@@ -19,32 +23,74 @@ public class SceneBuilder {
         stage = stage1;
     }
 
+    // main menu
     protected static Scene createOptions() {
-        Button calculateMileage = new Button("Calculate mileage");
-        Button calculateDisplacementDiff = new Button("Calculate disp. difference");
-        Button calculateTyreDifference = new Button("Calculate tyre diameter");
+        Button calculateMileageButton = new Button("Calculate mileage");
+        Button calculateDisplacementDiffButton = new Button("Calculate disp. difference");
+        Button calculateTyreDifferenceButton = new Button("Calculate tyre diameter");
+        Button showAboutButton = new Button("About");
 
-        calculateMileage.setMinWidth(Coordinates.MILEAGEBUTTON.BOUNDARYWIDTH);
-        calculateMileage.setLayoutX(Coordinates.MILEAGEBUTTON.WIDTH);
-        calculateMileage.setLayoutY(Coordinates.MILEAGEBUTTON.HEIGHT);
-        calculateMileage.setOnAction(e -> stage.setScene(createMileageCalculator()));
+        calculateMileageButton.setMinWidth(Coordinates.MILEAGEBUTTON.BOUNDARYWIDTH);
+        calculateMileageButton.setLayoutX(Coordinates.MILEAGEBUTTON.WIDTH);
+        calculateMileageButton.setLayoutY(Coordinates.MILEAGEBUTTON.HEIGHT);
+        calculateMileageButton.setOnAction(e -> stage.setScene(createMileageCalculator()));
 
-        calculateDisplacementDiff.setMaxWidth(Coordinates.DISPBUTTON.BOUNDARYWIDTH);
-        calculateDisplacementDiff.setLayoutX(Coordinates.DISPBUTTON.WIDTH);
-        calculateDisplacementDiff.setLayoutY(Coordinates.DISPBUTTON.HEIGHT);
-        calculateDisplacementDiff.setOnAction(e -> stage.setScene(createDisplacementDiffCalculator()));
+        calculateDisplacementDiffButton.setMinWidth(Coordinates.DISPBUTTON.BOUNDARYWIDTH);
+        calculateDisplacementDiffButton.setLayoutX(Coordinates.DISPBUTTON.WIDTH);
+        calculateDisplacementDiffButton.setLayoutY(Coordinates.DISPBUTTON.HEIGHT);
+        calculateDisplacementDiffButton.setOnAction(e -> stage.setScene(createDisplacementDiffCalculator()));
 
-        calculateTyreDifference.setMaxWidth(Coordinates.TYREBUTTON.BOUNDARYWIDTH);
-        calculateTyreDifference.setLayoutX(Coordinates.TYREBUTTON.WIDTH);
-        calculateTyreDifference.setLayoutY(Coordinates.TYREBUTTON.HEIGHT);
-        calculateTyreDifference.setOnAction(e -> stage.setScene(createTyreCalculator()));
+        calculateTyreDifferenceButton.setMinWidth(Coordinates.TYREBUTTON.BOUNDARYWIDTH);
+        calculateTyreDifferenceButton.setLayoutX(Coordinates.TYREBUTTON.WIDTH);
+        calculateTyreDifferenceButton.setLayoutY(Coordinates.TYREBUTTON.HEIGHT);
+        calculateTyreDifferenceButton.setOnAction(e -> stage.setScene(createTyreCalculator()));
+
+        showAboutButton.setMinWidth(Coordinates.ABOUTBUTTON.BOUNDARYWIDTH);
+        showAboutButton.setLayoutX(Coordinates.ABOUTBUTTON.WIDTH);
+        showAboutButton.setLayoutY(Coordinates.ABOUTBUTTON.HEIGHT);
+        showAboutButton.setOnAction(e -> stage.setScene(createAboutMenu()));
 
         Pane layout = new Pane();
-        layout.getChildren().add(calculateMileage);
-        layout.getChildren().add(calculateDisplacementDiff);
-        layout.getChildren().add(calculateTyreDifference);
+        layout.getChildren().add(calculateMileageButton);
+        layout.getChildren().add(calculateDisplacementDiffButton);
+        layout.getChildren().add(calculateTyreDifferenceButton);
+        layout.getChildren().add(showAboutButton);
 
         return new Scene(layout, Coordinates.OPTIONSPANE.WIDTH, Coordinates.OPTIONSPANE.HEIGHT);
+    }
+
+    private static Scene createAboutMenu() {
+        Pane aboutMenuPane = new Pane();
+
+        TextArea info = new TextArea();
+        info.setText("This project was written by scratch and is intended to practise " +
+                "good OOP principles and overall project structure. " +
+                "Features a calculator that can calculate engine displacement " +
+                "and engine displacement difference if bore and stroke measurements are affected." +
+                "A gas mileage calculator is also available. Tyre diamater and difference in diameters can also be calculated. ");
+        info.setMaxSize(Coordinates.INFOTEXTAREA.WIDTH, Coordinates.INFOTEXTAREA.HEIGHT);
+        info.setFont(new Font(18));
+        info.setWrapText(true);
+
+
+        Button backButton = new Button("Back");
+        backButton.setLayoutX(Coordinates.BACKBUTTON4.WIDTH);
+        backButton.setLayoutY(Coordinates.BACKBUTTON4.HEIGHT);
+        backButton.setOnAction(b -> stage.setScene(createOptions()));
+
+        Image explanationImage = new Image("/views/explanation.png");
+        ImageView view = new ImageView(explanationImage);
+        view.setLayoutY(Coordinates.IMAGE.HEIGHT);
+        view.setFitHeight(Coordinates.IMAGE.WIDTH);
+        view.setFitWidth(Coordinates.IMAGE.WIDTH);
+
+
+        aboutMenuPane.getChildren().add(info);
+        aboutMenuPane.getChildren().add(backButton);
+        aboutMenuPane.getChildren().add(view);
+
+
+        return new Scene(aboutMenuPane,Coordinates.ABOUTPANE.WIDTH, Coordinates.ABOUTPANE.HEIGHT);
     }
 
     private static Scene createTyreCalculator() {
@@ -139,7 +185,7 @@ public class SceneBuilder {
         Pane mileageCalcPane = new Pane();
 
         Label distanceLabel = new Label("Distance:");
-        Label gasUsedLabel = new Label("Gas used:");
+        Label fuelUsedLabel = new Label("Fuel used:");
 
         TextField distanceInput = new TextField();
         TextField gasInput = new TextField();
@@ -153,7 +199,7 @@ public class SceneBuilder {
         distanceInput.setLayoutX(Coordinates.DISTANCE.WIDTH);
         distanceInput.setLayoutY(Coordinates.DISTANCE.HEIGHT);
 
-        gasUsedLabel.setLayoutY(Coordinates.GASUSED.HEIGHT);
+        fuelUsedLabel.setLayoutY(Coordinates.GASUSED.HEIGHT);
         gasInput.setLayoutX(Coordinates.GASUSED.WIDTH);
         gasInput.setLayoutY(Coordinates.GASUSED.HEIGHT);
 
@@ -185,7 +231,7 @@ public class SceneBuilder {
         backButton.setOnAction(b -> stage.setScene(SceneBuilder.createOptions()));
 
         mileageCalcPane.getChildren().add(distanceLabel);
-        mileageCalcPane.getChildren().add(gasUsedLabel);
+        mileageCalcPane.getChildren().add(fuelUsedLabel);
         mileageCalcPane.getChildren().add(distanceInput);
         mileageCalcPane.getChildren().add(gasInput);
         mileageCalcPane.getChildren().add(isImperial);

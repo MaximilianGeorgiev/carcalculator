@@ -14,14 +14,14 @@ public class Engine implements Engineable {
     private int cylCount;
     private double displacement;
 
-    private double gasMileage;
+    private double mileage;
 
     public double getGasMileage() {
-        return this.gasMileage;
+        return this.mileage;
     }
 
     private void setGasMileage(double gasMileage) {
-        this.gasMileage = gasMileage;
+        this.mileage = gasMileage;
     }
 
     public double getDisplacement() {

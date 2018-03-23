@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="carcalculator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/carcalculator_jar</output-path>
+    <root id="archive" name="carcalculator.jar">
+      <element id="module-output" name="carcalculator" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
